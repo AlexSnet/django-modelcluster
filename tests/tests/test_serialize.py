@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.test import TestCase
 import datetime
 
@@ -10,7 +12,7 @@ class SerializeTest(TestCase):
             BandMember(name='Paul McCartney'),
         ])
 
-        expected = {'pk': None, 'albums': [], 'name': u'The Beatles', 'members': [{'pk': None, 'name': u'John Lennon', 'band': None}, {'pk': None, 'name': u'Paul McCartney', 'band': None}]}
+        expected = {'pk': None, 'albums': [], 'name': 'The Beatles', 'members': [{'pk': None, 'name': 'John Lennon', 'band': None}, {'pk': None, 'name': 'Paul McCartney', 'band': None}]}
         self.assertEqual(expected, beatles.serializable_data())
 
     def test_serialize_json_with_dates(self):
@@ -31,10 +33,10 @@ class SerializeTest(TestCase):
         beatles = Band.from_serializable_data({
             'pk': 9,
             'albums': [],
-            'name': u'The Beatles',
+            'name': 'The Beatles',
             'members': [
-                {'pk': None, 'name': u'John Lennon', 'band': None},
-                {'pk': None, 'name': u'Paul McCartney', 'band': None},
+                {'pk': None, 'name': 'John Lennon', 'band': None},
+                {'pk': None, 'name': 'Paul McCartney', 'band': None},
             ]
         })
         self.assertEqual(9, beatles.id)
@@ -62,7 +64,7 @@ class SerializeTest(TestCase):
         snail_ice_cream = Dish.objects.create(name="Snail ice cream")
         chateauneuf = Wine.objects.create(name="Chateauneuf-du-Pape 1979")
         fat_duck = Restaurant(name="The Fat Duck", proprietor=heston_blumenthal, serves_hot_dogs=False, menu_items=[
-            MenuItem(dish=snail_ice_cream, price=20.00, recommended_wine=chateauneuf)
+            MenuItem(dish=snail_ice_cream, price='20.00', recommended_wine=chateauneuf)
         ])
         fat_duck_json = fat_duck.to_json()
 
